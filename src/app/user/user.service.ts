@@ -49,7 +49,9 @@ export class UserService {
 
   async show(id: string): Promise<UserEntity> {
     try {
-      return await this.userRepository.findOneOrFail(id);
+      return await this.userRepository.findOneOrFail(id, {
+        relations: ['role'],
+      });
     } catch (e) {
       throw new NotFoundException(ErrorMessages.ENTITY_NOT_FOUND);
     }

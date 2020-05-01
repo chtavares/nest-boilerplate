@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsEmail, Min } from 'class-validator';
+import { IsNotEmpty, IsString, IsUUID, IsEmail, Min } from 'class-validator';
 
 export class StoreUserDto {
   @IsNotEmpty()
@@ -13,4 +13,8 @@ export class StoreUserDto {
   @IsNotEmpty()
   @Min(8)
   password: string;
+
+  @IsNotEmpty()
+  @IsUUID()
+  roleId: string;
 }

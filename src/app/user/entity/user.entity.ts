@@ -19,6 +19,9 @@ export class UserEntity {
   @JoinColumn({ name: 'role_id', referencedColumnName: 'id' })
   role: RoleEntity;
 
+  @Column({ name: 'role_id', type: 'uuid', nullable: false })
+  roleId: string;
+
   @Column({ nullable: false })
   name: string;
 
