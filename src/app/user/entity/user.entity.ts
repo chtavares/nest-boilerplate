@@ -3,15 +3,21 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
+  JoinColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { RoleEntity } from '../../role/entity/role.entity';
 
 @Entity({ name: 'users', orderBy: { createdAt: 'DESC' } })
 export class UserEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @OneToOne(() => RoleEntity)
+  @JoinColumn({ name: 'role_id', referencedColumnName: 'id' })
+  role: RoleEntity;
 
   @Column({ nullable: false })
   name: string;

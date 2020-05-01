@@ -15,6 +15,7 @@ import {
 import { UserService } from './user.service';
 import { IndexUserQueryDto } from './dto/index-user.dto';
 import { StoreUserDto } from './dto/store-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('/api/v1/users')
 export class UserController {
@@ -38,24 +39,18 @@ export class UserController {
     return this.userService.show(id);
   }
 
-  // @Put(':id')
-  // async update(
-  //   @Req() req: Request,
-  //   @Param('id', new ParseUUIDPipe()) id: string,
-  //   @Body() body: UpdateAnswerDto,
-  // ) {
-  //   // const answer = await this.answerService.update(id, body);
-  //   // return {
-  //   //   message: 'Update answer data',
-  //   //   object: 'answer',
-  //   //   url: req.url,
-  //   //   data: answer,
-  //   // };
-  // }
+  @Put(':id')
+  async update(
+    @Req() req: Request,
+    @Param('id', new ParseUUIDPipe()) id: string,
+    @Body() body: UpdateUserDto,
+  ) {
+    return this.userService.update(id, body);
+  }
 
-  // @Delete(':id')
-  // @HttpCode(204)
-  // async destroy(@Param('id', new ParseUUIDPipe()) id: string) {
-  //   // await this.answerService.destroy(id);
-  // }
+  @Delete(':id')
+  @HttpCode(204)
+  async destroy(@Param('id', new ParseUUIDPipe()) id: string) {
+    await this.userService.destroy(id);
+  }
 }

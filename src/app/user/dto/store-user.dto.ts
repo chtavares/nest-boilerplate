@@ -11,7 +11,6 @@ export class StoreUserDto {
   email: string;
 
   @IsNotEmpty()
-  @IsEmail()
   @Min(8)
   password: string;
 }
