@@ -19,6 +19,7 @@ import { StoreUserDto } from './dto/store-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { ResetUserDto } from './dto/reset-user.dto';
 
 @Controller('/api/v1/users')
 export class UserController {
@@ -26,6 +27,11 @@ export class UserController {
   @Post('login')
   async login(@Req() req: Request, @Body() body: LoginUserDto) {
     return this.userService.login(body);
+  }
+
+  @Post('reset')
+  async reset(@Req() req: Request, @Body() body: ResetUserDto) {
+    return this.userService.reset(body);
   }
 
   @Post('forget')

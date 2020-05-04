@@ -1,3 +1,5 @@
 export class ForgetInterface {
-  email: string;
+  email?: string;
+  password?: string;
+  token?: string;
 }

@@ -43,7 +43,7 @@ export class UserService {
     );
   }
 
-  async login(body: Partial<LoginInterface>) {
+  async login(body: Partial<LoginInterface>): Promise<any> {
     try {
       const user = await this.userRepository.findOneOrFail({
         email: body.email,
@@ -70,6 +70,30 @@ export class UserService {
     }
   }
 
+  async reset(body: Partial<ForgetInterface>): Promise<any> {
+    try {
+      const { token, password } = body;
+
+      const newPassword = await this.passwordService.encryptPassword(
+        password,
+        10,
+      );
+
+      const user = await this.userRepository.findOneOrFail({
+        passwordResetToken: token,
+      });
+
+      await this.userRepository.merge(user, {
+        passwordResetToken: null,
+        password: newPassword,
+      });
+
+      return await this.userRepository.save(user);
+    } catch (e) {
+      throw new NotFoundException(e);
+    }
+  }
+
   async forget(body: Partial<ForgetInterface>): Promise<any> {
     try {
       const token = crypto.randomBytes(10).toString('hex');
@@ -78,6 +102,7 @@ export class UserService {
       });
 
       this.userRepository.merge(user, { passwordResetToken: token });
+      await this.userRepository.save(user);
 
       const template = this.mailerService.templateForgetPassword(token);
 
